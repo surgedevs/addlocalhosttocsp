@@ -7,4 +7,11 @@
 import { CspPolicies, MediaAndCssSrc } from "@main/csp";
 
 CspPolicies.localhost = MediaAndCssSrc;
+CspPolicies["http://localhost"] = MediaAndCssSrc;
+CspPolicies["localhost:*"] = MediaAndCssSrc;
+CspPolicies["http://localhost:*"] = MediaAndCssSrc;
+
 CspPolicies["127.0.0.1"] = MediaAndCssSrc;
+CspPolicies["http://127.0.0.1"] = MediaAndCssSrc;
+CspPolicies["127.0.0.1:*"] = MediaAndCssSrc;
+CspPolicies["http://127.0.0.1:*"] = MediaAndCssSrc;
