@@ -4,14 +4,20 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import { CspPolicies, MediaAndCssSrc } from "@main/csp";
+import { CspPolicies } from "@main/csp";
 
-CspPolicies.localhost = MediaAndCssSrc;
-CspPolicies["http://localhost"] = MediaAndCssSrc;
-CspPolicies["localhost:*"] = MediaAndCssSrc;
-CspPolicies["http://localhost:*"] = MediaAndCssSrc;
+export function getCurrentCSPPolicies(): typeof CspPolicies {
+    return { ...CspPolicies };
+}
 
-CspPolicies["127.0.0.1"] = MediaAndCssSrc;
-CspPolicies["http://127.0.0.1"] = MediaAndCssSrc;
-CspPolicies["127.0.0.1:*"] = MediaAndCssSrc;
-CspPolicies["http://127.0.0.1:*"] = MediaAndCssSrc;
+export function updateCSPPolicies(_event, policies: typeof CspPolicies) {
+    Object.entries(policies).forEach(([domain, policy]) => {
+        CspPolicies[domain] = policy;
+    });
+
+    Object.entries(CspPolicies).forEach(([domain, _policy]) => {
+        if (!(domain in policies)) {
+            delete CspPolicies[domain];
+        }
+    });
+}
