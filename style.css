@@ -1,7 +1,7 @@
 .cspmanager-container {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 8px;
 }
 
 .cspmanager-add {

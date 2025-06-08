@@ -9,6 +9,7 @@ import "./style.css";
 import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType, PluginNative } from "@utils/types";
+import { findComponentByCodeLazy } from "@webpack";
 import { Button, Select, TextInput, useEffect, useState } from "@webpack/common";
 
 const Native = VencordNative.pluginHelpers.CSPManager as PluginNative<typeof import("./native")>;
@@ -33,6 +34,8 @@ const settings = definePluginSettings({
 });
 
 function SettingsBlock() {
+    const AddButton = findComponentByCodeLazy('.Text,{color:"interactive-active",variant:"text-md/semibold",');
+    
     const [cspRules, setCspRules] = useState(settings.store.cspRules);
 
     useEffect(() => {
@@ -88,32 +91,35 @@ function SettingsBlock() {
                     select={onChangePolicy}
                     className={"cspmanager-select"}
                 />
-
-                <Button color={Button.Colors.RED}>
+                <Button
+                    size={Button.Sizes.ICON}
+                    style={{ width: 44, height: 44, lineHeight: 0 }}
+                    color={Button.Colors.PRIMARY}
+                >
                     <svg
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
                         role="img"
                     >
-                        <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z" />
+                        <path fill="var(--text-feedback-critical)" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" />
                     </svg>
                 </Button>
             </div>;
         })())}
 
-        <Button color={Button.Colors.GREEN} className="cspmanager-add">
-            <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M13 6a1 1 0 1 0-2 0v5H6a1 1 0 1 0 0 2h5v5a1 1 0 1 0 2 0v-5h5a1 1 0 1 0 0-2h-5V6Z" className="" />
-            </svg>
-        </Button>
+        <AddButton
+            text={"Add Rule"}
+            tooltip={"Add a CSP rule."}
+            onClick={() => { }}
+        />
     </div>;
 }
 
 export default definePlugin({
     name: "CSPManager",
     description: "Allows manual control of Vencords CSP.",
-    authors: [Devs.surgedevs],
+    authors: [Devs.surgedevs, { name: "paipai", id: 1375697625864601650n }],
     required: true,
     settings
 });
