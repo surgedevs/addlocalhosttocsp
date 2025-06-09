@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
 
-.cspmanager-add {
-  flex: 1;
+  div[role="button"] > div {
+    cursor: pointer !important;
+  }
 }
 
 .cspmanager-block {
